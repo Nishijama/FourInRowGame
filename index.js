@@ -22,17 +22,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // create game grid
     gameGrid = document.querySelector('.grid');
-    gameGrid.style.width = '80vw';
-    gameGrid.style.height = '80vw';
-
-
+    gameGrid.style.width = '80vmin';
 
     for (let i=0; i<columnNumber*rowNumber; i++)
     {
         let div = document.createElement("div");
-        div.style.width = (80/columnNumber - 1) + 'vw';
-        div.style.height = (80/columnNumber - 1) + 'vw';
-        div.style.border = '0.5vw solid #1F1D36';
+        div.style.width = (80/columnNumber - 1) + 'vmin';
+        div.style.height = (80/columnNumber - 1) + 'vmin';
+        div.style.border = '0.5vmin solid #1F1D36';
         // div.innerHTML = i;
         gameGrid.append(div);
     }
