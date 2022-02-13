@@ -43,35 +43,83 @@ document.addEventListener('DOMContentLoaded', () => {
     const squares = document.querySelectorAll('.grid div');
     displayCurrentPlayer = document.querySelector('#displayCurrentPlayer');
     let currentPlayer = 1;
+    let numberOfTakenFields = 0;
+    const timeLimit = 5000;
+
+    const timerBar = document.querySelector('#timerBar');
+    const originalTimerWidth = 100;
+    let timerWidth = originalTimerWidth;
+    timerBar.style.width = timerWidth + "%";
+
+    let timerFunc = window.setTimeout(timeOver, timeLimit);
+    let timerDisplayFunc = window.setInterval(timerDisplay, 25);   
+
+    function timeOver() {
+        if (currentPlayer == 1)
+            alert("Koniec czasu. Wygrał gracz 2");
+        else
+            alert("Koniec czasu. Wygrał gracz 1");
+        resetTimer();
+        goToMenu();
+    }
+
+    function resetTimer() {
+        clearTimeout(timerFunc);
+        clearInterval(timerDisplayFunc);
+        timerWidth = originalTimerWidth;
+        timerBar.style.width = timerWidth + "%";
+    }
+
+    function timerDisplay() {
+        timerWidth -= 0.005 * originalTimerWidth;
+        timerBar.style.width = timerWidth + "%";
+    }
 
     for (let i=0; i< squares.length; i++)
     {
         squares[i].onclick = () => {
+
             if (squares[i+columnNumber].classList.contains('taken') && !(squares[i].classList.contains('player_one') || squares[i].classList.contains('player_two') ))
             {
                 squares[i].classList.add('taken');
+
+                resetTimer();
+                timerFunc = window.setTimeout(timeOver, timeLimit);
+                timerDisplayFunc = window.setInterval(timerDisplay, 25); 
+
                 if (currentPlayer == 1)
                 {
                     squares[i].classList.add('player_one');
                     currentPlayer = 2;
                     displayCurrentPlayer.innerHTML = currentPlayer;
-
+                    numberOfTakenFields++;
+                    // console.log(numberOfTakenFields);
                 } else if (currentPlayer == 2) {
                     squares[i].classList.add('player_two')
                     currentPlayer = 1;
                     displayCurrentPlayer.innerHTML = currentPlayer;
+                    numberOfTakenFields++;
+                    // console.log(numberOfTakenFields);
                 }
             } else {
                 alert("Tutaj nie wolno!");
             }
             let result = check_win();
-            if (result == 1 || result == 2)
+            if (result == 1 || result == 2 || result == 3)
             {
-                alert('Game over. Wygrał gracz: ' + result);
+                if (result == 1 || result == 2)
+                {
+                    alert('Game over. Wygrał gracz: ' + result);
+                } else {
+                    alert('Remis');
+                }
+                resetTimer();
                 goToMenu();
+
             }
         }
     }
+
 
     function check_win() {
         for (let i=0; i<squares.length-columnNumber; i++)
@@ -163,22 +211,30 @@ document.addEventListener('DOMContentLoaded', () => {
                     winner = 2;
                 }
             }
+            
+            // CHECK FOR TIE IF ALL FIELDS ARE TAKEN
 
+            if (numberOfTakenFields == columnNumber*rowNumber)
+                winner = 3;
 
             if (winner == 1) {
                 return 1;
             } else if (winner == 2) {
                 return 2;
+            } else if (winner == 3) {
+                return 3;
             }
         }
         return 0;
     }
 
     replayIcon.addEventListener('click', () => {
-        resetGame()
+        resetGame();
+        
     })
 
     menuIcon.addEventListener('click', () => {
+        resetTimer();
         goToMenu()
     })
 
@@ -202,7 +258,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         currentPlayer = 1;
         displayCurrentPlayer.innerHTML = currentPlayer;
-
+        resetTimer();
+        timerFunc = window.setTimeout(timeOver, timeLimit);
+        timerDisplayFunc = window.setInterval(timerDisplay, 25); 
     }
 
     })
