@@ -14,11 +14,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const replayIcon = document.querySelector('#replay_icon');
     const menuIcon = document.querySelector('#menu_icon');
+    const timerBar = document.getElementById("timerBar");
+   
 
     document.querySelector('.current_turn').style.display = 'inline';
     document.querySelector('.menu').style.display = 'none';
     replayIcon.style.display = 'inline-block';
     menuIcon.style.display = 'inline-block';
+    timerBar.style.visibility = 'visible';
+    
 
     // create game grid
     gameGrid = document.querySelector('.grid');
@@ -29,8 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let div = document.createElement("div");
         div.style.width = (80/columnNumber - 1) + 'vmin';
         div.style.height = (80/columnNumber - 1) + 'vmin';
-        div.style.border = '0.5vmin solid #1F1D36';
-        // div.innerHTML = i;
+        div.style.border = '0.5vmin solid white';
         gameGrid.append(div);
     }
     for (let i=0; i<columnNumber; i++)
@@ -46,8 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let numberOfTakenFields = 0;
     const timeLimit = 5000;
 
-    const timerBar = document.querySelector('#timerBar');
-    const originalTimerWidth = 100;
+    const originalTimerWidth = 50;
     let timerWidth = originalTimerWidth;
     timerBar.style.width = timerWidth + "%";
 
@@ -56,9 +58,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function timeOver() {
         if (currentPlayer == 1)
-            alert("Koniec czasu. Wygrał gracz 2");
+            alert("Time's up! Player 2 wins!");
         else
-            alert("Koniec czasu. Wygrał gracz 1");
+            alert("Time's up! Player 1 wins!");
         resetTimer();
         goToMenu();
     }
@@ -102,16 +104,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     // console.log(numberOfTakenFields);
                 }
             } else {
-                alert("Tutaj nie wolno!");
+                alert("Illegal move!");
+                resetTimer();
+                timerFunc = window.setTimeout(timeOver, timeLimit);
+                timerDisplayFunc = window.setInterval(timerDisplay, 25);
             }
             let result = check_win();
             if (result == 1 || result == 2 || result == 3)
             {
                 if (result == 1 || result == 2)
                 {
-                    alert('Game over. Wygrał gracz: ' + result);
+                    alert('Game over. Player ' + result +' won!');
                 } else {
-                    alert('Remis');
+                    alert('Game over. Draw.');
                 }
                 resetTimer();
                 goToMenu();
@@ -247,6 +252,7 @@ document.addEventListener('DOMContentLoaded', () => {
         displayCurrentPlayer.innerHTML = currentPlayer;
         document.querySelector('.current_turn').style.display = 'none';
         document.querySelector('.menu').style.display = 'block';
+        timerBar.style.visibility = 'hidden';
         replayIcon.style.display = 'none';
         menuIcon.style.display = 'none';
     }

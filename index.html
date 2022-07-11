@@ -4,21 +4,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Połącz cztery</title>
+    <title>Connect four</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <script src="index.js"></script>
 </head>
 <body>
-    <h1>Połącz cztery</h1>
-    <h3 class="current_turn">Jedzie: gracz <span id="displayCurrentPlayer">1</span></h3>
+    <h3 class="current_turn">Current turn: player <span id="displayCurrentPlayer">1</span></h3>
     <div id="timerBar"></div>
 
     <div class="menu">
-        <p><em>Budując od dołu, połącz 4 swoje pola w lini prostej: pionowo, poziomo, lub na ukos zanim twój przeciwnik zrobi to pierwszy</em></p>
+    <h1>Connect four</h1>
+        <p>Building up from the bottom, connect four fields (horizontally, vertically or diagonally) before your opponent does.</p>
         <form id="menu_form" action="#" method="post">
-            <legend>Wymiary planszy</legend>
-            <label for="gameboard_width">Kolumny: </label>
+            <legend>Gameboard size</legend>
+            <label for="gameboard_width">Columns: </label>
             <select name="gameboard_width" id="gameboard_width">
                 <option value="5">5</option>
                 <option value="6">6</option>
@@ -27,7 +27,7 @@
                 <option value="9">9</option>
                 <option value="10">10</option>
             </select>
-            <label for="gameboard_height">Rzędy: </label>
+            <label for="gameboard_height">Rows: </label>
             <select name="gameboard_height" id="gameboard_height">
                 <option value="5">5</option>
                 <option value="6">6</option>
@@ -36,7 +36,7 @@
                 <option value="9">9</option>
                 <option value="10">10</option>
             </select>
-            <input type="submit" value="Graj!">
+            <input type="submit" value="Play!">
         </form>
     </div>
 
