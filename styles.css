@@ -1,17 +1,37 @@
 
+@font-face {
+    font-family: AmaticSC-Regular;
+    src: url('./AmaticSC-Regular.ttf');
+}
+@font-face {
+    font-family: AmaticSC-Bold;
+    src: url('./AmaticSC-Regular.ttf');
+}
 /* ************ TAG STYLE ************ */
+* {
+    font-family: AmaticSC-Regular;
+}
 
 body {
-    background-color: #F9F9F9;
+    margin: 0;
+    height: 100vh;
+    width: 100vw;
+    background-image: linear-gradient(to top, #fbc2eb 0%, #a6c1ee 100%);
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 h1 {
     color: #C490E4;
+    font-family: AmaticSC-Bold;
+    font-size: 6vmin;
 }
 h3 {
     color: black;
-    font-size: 16px;
+    font-size: 4vmin;
     font-weight: normal;
     display: none;
 }
@@ -30,17 +50,12 @@ display: none;
     color: #C490E4;
 }
 
-.grid {
-
-    display: flex;
-    flex-wrap: wrap;
-    margin: 20px auto;
-}
 
 .grid div {
-    background-color: lightgray;
-    border-radius: 2vmin;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 1vmin;
     border: 1px solid white;
+    margin: 5px;
 }
 
 .grid div.taken {
@@ -52,16 +67,17 @@ display: none;
 }
 
 .grid div:hover {
-    background-color: #CDF0EA;
+    background-color: rgba(255, 255, 255, 0.6);
+    transition: 0.3s;
 }
 .grid div.taken.player_one {
     border-radius: 50%;
-    background-color: #C490E4;
+    background-color: #a6c1ee;
 }
 
 .grid div.taken.player_two {
     border-radius: 50%;
-    background-color: #F6C6EA;
+    background-color: #fbc2eb;
 }
 
 .game-over {
@@ -69,18 +85,17 @@ display: none;
 }
 
 .menu {
-    background-color: #F9F9F9;
-    border: 1px solid #1F1D36;
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 1px solid white;
     width: 70vw;
     height: auto;
     padding: 2vmax;
     margin: auto;
-
 }
 
 .menu p {
     color: gray;
-    font-size: 3vh;
+    font-size: 3.5vh;
 }
 
 .menu form {
@@ -90,7 +105,7 @@ display: none;
 }
 
 .menu legend {
-    font-size: 3vh;
+    font-size: 4vh;
     color: black;
     font-weight: bold;
     grid-column: 1/3;
@@ -100,11 +115,11 @@ display: none;
     color: black;
     text-align: right;
     padding-right: 5vh;
-    font-size:3vh;
+    font-size:3.5vh;
 }
 .menu select {
     width: 12vmin;
-    font-size:3vh;
+    font-size:3.5vh;
 }
 
 .menu input {
@@ -114,7 +129,8 @@ display: none;
     color:white;
     padding: 5px 10px;
     grid-column: 1/3;
-    font-size: 4vh;
+    font-family: AmaticSC-Bold;
+    font-size: 5vh;
 }
 
 
@@ -125,3 +141,4 @@ display: none;
     margin:10px auto;
     background-color: black;
 }
+

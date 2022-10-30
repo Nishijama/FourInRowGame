@@ -25,22 +25,25 @@ document.addEventListener('DOMContentLoaded', () => {
     
 
     // create game grid
-    gameGrid = document.querySelector('.grid');
-    gameGrid.style.width = '80vmin';
+    const gameGrid = document.querySelector('.grid');
+    gameGrid.style.width = '50vmin';
 
-    for (let i=0; i<columnNumber*rowNumber; i++)
-    {
-        let div = document.createElement("div");
-        div.style.width = (80/columnNumber - 1) + 'vmin';
-        div.style.height = (80/columnNumber - 1) + 'vmin';
-        div.style.border = '0.5vmin solid white';
-        gameGrid.append(div);
-    }
-    for (let i=0; i<columnNumber; i++)
-    {
-        let div = document.createElement("div");
-        div.classList.add('taken', 'helper')
-        gameGrid.append(div);
+
+    for (let i=0; i<=rowNumber; i++) {
+        const rowEl = document.createElement("tr")
+        for (let j=0; j<columnNumber; j++) {
+            const cell = document.createElement("td")
+            const div = document.createElement("div")
+            div.style.width = (50/columnNumber) -1 + 'vmin';
+            div.style.height = (50/columnNumber) -1 + 'vmin';
+            div.style.border = '1px solid white';
+            if (i === rowNumber) {
+                div.classList.add('taken', 'helper')
+            }
+            cell.append(div);
+            rowEl.append(cell);
+        }
+        gameGrid.append(rowEl)
     }
 
     const squares = document.querySelectorAll('.grid div');
@@ -244,9 +247,10 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 
     function goToMenu() {
-        for (let i=0; i< squares.length; i++)
+        const rows = document.querySelectorAll('tr')
+        for (let i=0; i< rows.length; i++)
         {
-            squares[i].remove();
+            rows[i].remove();
         }
         currentPlayer = 1;
         displayCurrentPlayer.innerHTML = currentPlayer;
