@@ -80,7 +80,9 @@ display: none;
 }
 
 
-
+.current_turn {
+    display: none;
+}
 
 .game-over {
     display: none;
@@ -170,6 +172,7 @@ p {
 }
 
 #pop-up > h3 {
+    display: inline;
     font-size: 4vh;
     color: black;
     font-weight: bold;

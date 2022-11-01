@@ -1,9 +1,10 @@
 
 document.addEventListener('DOMContentLoaded', () => {
+
     menuForm = document.getElementById("menu_form");
     menuForm.addEventListener('submit', (event) => {
         event.preventDefault()
-
+    const displayCurrentPlayer = document.querySelector('#displayCurrentPlayer');
     const chooseWidth = document.getElementById('gameboard_width');
     const chosenWidth = chooseWidth.options[chooseWidth.selectedIndex].value;
     const columnNumber = parseInt(chosenWidth);
@@ -52,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const squares = document.querySelectorAll('.grid div');
-    displayCurrentPlayer = document.querySelector('#displayCurrentPlayer');
+
     let currentPlayer = 1;
     let numberOfTakenFields = 0;
     const timeLimit = 5000;
