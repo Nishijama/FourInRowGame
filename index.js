@@ -1,20 +1,25 @@
 
 document.addEventListener('DOMContentLoaded', () => {
-    menuForm = document.querySelector("#menu_form");
+    menuForm = document.getElementById("menu_form");
     menuForm.addEventListener('submit', (event) => {
         event.preventDefault()
 
-    const chooseWidth = document.querySelector('#gameboard_width');
+    const chooseWidth = document.getElementById('gameboard_width');
     const chosenWidth = chooseWidth.options[chooseWidth.selectedIndex].value;
     const columnNumber = parseInt(chosenWidth);
 
-    const chooseHeight = document.querySelector('#gameboard_height');
+    const chooseHeight = document.getElementById('gameboard_height');
     const chosenHeight = chooseHeight.options[chooseHeight.selectedIndex].value;
     const rowNumber = parseInt(chosenHeight);
 
-    const replayIcon = document.querySelector('#replay_icon');
-    const menuIcon = document.querySelector('#menu_icon');
+    const replayIcon = document.getElementById('replay_icon');
+    const menuIcon = document.getElementById('menu_icon');
     const timerBar = document.getElementById("timerBar");
+    const modal = document.querySelector(".modal")
+    const popUp = document.getElementById("pop-up")
+    const menu = document.querySelector(".menu")
+
+    let gameState="playing";
    
 
     document.querySelector('.current_turn').style.display = 'inline';
@@ -60,12 +65,27 @@ document.addEventListener('DOMContentLoaded', () => {
     let timerDisplayFunc = window.setInterval(timerDisplay, 25);   
 
     function timeOver() {
-        if (currentPlayer == 1)
-            alert("Time's up! Player 2 wins!");
-        else
-            alert("Time's up! Player 1 wins!");
-        resetTimer();
-        goToMenu();
+        if (gameState === "playing") {
+            modal.style.display = 'block';
+            gameState = 'ended'
+            popUp.firstElementChild.innerText = "Time's up!";
+            if (currentPlayer == 1)
+                popUp.children[1].innerText = "Player 2 wins! :)"
+            else
+                popUp.children[1].innerText = "Player 1 wins! :)"
+
+            const button = document.createElement('h3')
+            button.innerHTML = "Finish"
+            popUp.appendChild(button)
+
+
+            button.addEventListener('click', () => {
+                modal.style.display = 'none';
+                popUp.removeChild(button)
+                resetTimer();
+                goToMenu();
+                })
+        }
     }
 
     function resetTimer() {
@@ -107,22 +127,54 @@ document.addEventListener('DOMContentLoaded', () => {
                     // console.log(numberOfTakenFields);
                 }
             } else {
-                alert("Illegal move!");
-                resetTimer();
-                timerFunc = window.setTimeout(timeOver, timeLimit);
-                timerDisplayFunc = window.setInterval(timerDisplay, 25);
+                modal.style.display = 'block';
+                timerBar.style.visibility = 'hidden';
+                gameState = "paused"
+                popUp.firstElementChild.innerText = "Illegal move";
+                popUp.children[1].innerText = "Your circle cannot float in the air :)"
+
+                const button = document.createElement('h3')
+                button.innerText = "Continue"
+                popUp.appendChild(button)
+
+
+                button.addEventListener('click', () => {
+                    resetTimer();
+                    timerFunc = window.setTimeout(timeOver, timeLimit);
+                    timerDisplayFunc = window.setInterval(timerDisplay, 25);
+                    modal.style.display = 'none';
+                    gameState = "playing"
+                    timerBar.style.visibility = 'visible';
+                    popUp.removeChild(button)
+                })
+
             }
             let result = check_win();
             if (result == 1 || result == 2 || result == 3)
             {
+                modal.style.display = 'block';
+                timerBar.style.visibility = 'hidden';
+                gameState = 'ended'
+                popUp.firstElementChild.innerText = "Game Over!";
+
                 if (result == 1 || result == 2)
                 {
-                    alert('Game over. Player ' + result +' won!');
+                    popUp.children[1].innerText = `Player ${result} won!`
                 } else {
-                    alert('Game over. Draw.');
+                    popUp.children[1].innerText = "It's a draw :)"
                 }
-                resetTimer();
-                goToMenu();
+
+                let button = document.createElement('h3')
+                button.innerText = "Finish"
+                popUp.appendChild(button)
+
+                button.addEventListener('click', () => {
+                    modal.style.display = 'none';
+                    resetTimer();
+                    popUp.removeChild(button)
+                    goToMenu();
+                })
+
 
             }
         }
@@ -247,6 +299,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 
     function goToMenu() {
+        gameState = "menu"
         const rows = document.querySelectorAll('tr')
         for (let i=0; i< rows.length; i++)
         {
@@ -255,13 +308,14 @@ document.addEventListener('DOMContentLoaded', () => {
         currentPlayer = 1;
         displayCurrentPlayer.innerHTML = currentPlayer;
         document.querySelector('.current_turn').style.display = 'none';
-        document.querySelector('.menu').style.display = 'block';
+        menu.style.display = 'block';
         timerBar.style.visibility = 'hidden';
         replayIcon.style.display = 'none';
         menuIcon.style.display = 'none';
     }
 
     function resetGame() {
+        gameState = "playing"
         for (let i=0; i< squares.length-columnNumber; i++)
         {
             squares[i].classList.remove('player_one', 'player_two', 'taken');

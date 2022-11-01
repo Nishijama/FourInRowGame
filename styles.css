@@ -33,7 +33,6 @@ h3 {
     color: black;
     font-size: 4vmin;
     font-weight: normal;
-    display: none;
 }
 
 
@@ -80,6 +79,9 @@ display: none;
     background-color: #fbc2eb;
 }
 
+
+
+
 .game-over {
     display: none;
 }
@@ -93,7 +95,7 @@ display: none;
     margin: auto;
 }
 
-.menu p {
+p {
     color: gray;
     font-size: 3.5vh;
 }
@@ -144,3 +146,40 @@ display: none;
     background-color: black;
 }
 
+.modal {
+    position: fixed;
+    top: 0;
+    left:0;
+    overflow: auto;
+    z-index: 1;
+    height: 100%;
+    width: 100%;
+    background-color:rgba(255, 255, 255, 0.6);
+    display: none;
+    padding-top:33%;
+}
+
+#pop-up {
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.8);
+    width: 45%;
+    padding: 5vh;
+    animation-name: animatetop;
+    animation-duration: 0.4s;
+    margin: auto;
+}
+
+#pop-up > h3 {
+    font-size: 4vh;
+    color: black;
+    font-weight: bold;
+}
+
+#pop-up > h3:hover {
+    cursor: pointer;
+}
+
+@keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+}
